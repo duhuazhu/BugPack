@@ -1,0 +1,47 @@
+name: Bug Report
+description: 报告一个 Bug / Report a bug
+labels: [bug]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述 / Description
+      description: 请清楚描述遇到的问题 / Describe the bug clearly
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤 / Steps to Reproduce
+      description: 如何复现这个问题 / How to reproduce
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望行为 / Expected Behavior
+
+  - type: input
+    id: version
+    attributes:
+      label: BugPack 版本 / Version
+      placeholder: "0.1.0"
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Node.js 版本 / Node.js Version
+      placeholder: ">= 18.x"
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: 操作系统 / OS
+      options:
+        - macOS
+        - Windows
+        - Linux

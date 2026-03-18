@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme variables - dark (default) */
+:root {
+  --bg-primary: #0A0A0F;
+  --bg-sidebar: #0F0F17;
+  --bg-card: #13131A;
+  --bg-input: #1A1A26;
+  --bg-hover: #15151F;
+  --border: #1E1E2E;
+  --accent: #6366F1;
+  --accent-hover: #818CF8;
+  --text-primary: #E4E4E7;
+  --text-secondary: #A1A1AA;
+  --text-muted: #6B7280;
+  --scrollbar-track: #0A0A0F;
+  --scrollbar-thumb: #2E2E3E;
+  --scrollbar-thumb-hover: #3E3E4E;
+}
+
+/* Light theme */
+:root.light {
+  --bg-primary: #F8F9FA;
+  --bg-sidebar: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-input: #F1F3F5;
+  --bg-hover: #E9ECEF;
+  --border: #DEE2E6;
+  --accent: #6366F1;
+  --accent-hover: #4F46E5;
+  --text-primary: #212529;
+  --text-secondary: #495057;
+  --text-muted: #868E96;
+  --scrollbar-track: #F8F9FA;
+  --scrollbar-thumb: #CED4DA;
+  --scrollbar-thumb-hover: #ADB5BD;
+}
+
+/* Global scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* Drop zone highlight */
+.drop-active {
+  border: 2px dashed var(--accent) !important;
+  background: color-mix(in srgb, var(--accent) 5%, transparent) !important;
+}
+
+/* Collapsible section transition */
+.section-content {
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}

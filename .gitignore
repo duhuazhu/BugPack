@@ -1,0 +1,38 @@
+node_modules/
+dist/
+data/
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project internal
+todo/
+.mcp.json
+/产品录屏/
+/录制项目的视频/
+BugPack-产品构思文档.md
+
+# Build cache
+*.tsbuildinfo
+
+# Logs
+*.log
+*.pid

@@ -1,0 +1,17 @@
+name: Feature Request
+description: 提一个新功能建议 / Suggest a new feature
+labels: [enhancement]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 功能描述 / Description
+      description: 你希望 BugPack 增加什么功能？/ What feature would you like?
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: 使用场景 / Use Case
+      description: 这个功能解决什么问题？/ What problem does this solve?

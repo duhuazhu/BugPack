@@ -1,0 +1,97 @@
+{
+  "name": "bugpack-mcp",
+  "version": "1.0.0",
+  "description": "Pack bug screenshots into AI coding instructions with MCP Server integration",
+  "author": "duhuazhu",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/duhuazhu/BugPack"
+  },
+  "homepage": "https://github.com/duhuazhu/BugPack",
+  "bugs": {
+    "url": "https://github.com/duhuazhu/BugPack/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "bug",
+    "bug-tracking",
+    "bug-report",
+    "screenshot",
+    "annotation",
+    "ai",
+    "claude",
+    "cursor",
+    "windsurf",
+    "vscode",
+    "cline",
+    "trae",
+    "marscode",
+    "developer-tools",
+    "qa",
+    "testing",
+    "fix-instructions",
+    "code-fix"
+  ],
+  "type": "module",
+  "bin": {
+    "bugpack-mcp": "bin/bugpack.mjs"
+  },
+  "files": [
+    "bin/",
+    "dist/",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "dev:server": "tsx watch src/server/index.ts",
+    "dev:all": "concurrently \"npm run dev\" \"npm run dev:server\"",
+    "mcp": "tsx src/mcp/index.ts",
+    "build": "vite build && tsc -p tsconfig.server.json",
+    "prepublishOnly": "npm run build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "adm-zip": "^0.5.16",
+    "archiver": "^7.0.1",
+    "better-sqlite3": "^11.7.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.1",
+    "uuid": "^11.1.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/adm-zip": "^0.5.7",
+    "@types/archiver": "^7.0.0",
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/multer": "^1.4.12",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@types/uuid": "^10.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
+    "fabric": "^6.6.1",
+    "lucide-react": "^0.469.0",
+    "marked": "^17.0.4",
+    "morphdom": "^2.7.8",
+    "postcss": "^8.4.49",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.2",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.5",
+    "zustand": "^5.0.3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
