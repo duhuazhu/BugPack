@@ -265,7 +265,7 @@ export function ZentaoModal({ onClose }: { onClose: () => void }) {
                     <p className="text-sm text-text-primary truncate">{bug.title}</p>
                     <div className="flex items-center gap-2 text-xs text-text-muted mt-0.5">
                       {bug.openedBy?.realname && <span>{bug.openedBy.realname}</span>}
-                      {bug.openedDate && <span>{bug.openedDate.split(' ')[0]}</span>}
+                      {bug.openedDate && <span>{new Date(bug.openedDate).toLocaleString()}</span>}
                     </div>
                   </div>
                   <button

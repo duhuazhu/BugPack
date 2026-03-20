@@ -253,7 +253,7 @@ export function LinearModal({ onClose }: { onClose: () => void }) {
                     <p className="text-sm text-text-primary truncate">{bug.title}</p>
                     <div className="flex items-center gap-2 text-xs text-text-muted mt-0.5">
                       {bug.creator && <span>{bug.creator}</span>}
-                      {bug.created && <span>{bug.created.split('T')[0]}</span>}
+                      {bug.created && <span>{new Date(bug.created).toLocaleString()}</span>}
                     </div>
                   </div>
                   <button

@@ -1,6 +1,6 @@
 {
   "name": "bugpack-mcp",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Pack bug screenshots into AI coding instructions with MCP Server integration",
   "author": "duhuazhu",
   "license": "MIT",
