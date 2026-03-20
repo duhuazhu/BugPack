@@ -19,6 +19,10 @@
   <a href="#quick-start">Quick Start</a> · <a href="#mcp-configuration">MCP Config</a> · <a href="#openclaw-skills">OpenClaw</a> · <a href="#features">Features</a> · <a href="#platform-integrations">Integrations</a>
 </p>
 
+<p align="center">
+  English | <a href="README.zh-CN.md">中文</a>
+</p>
+
 ---
 
 ![BugPack Demo](https://raw.githubusercontent.com/duhuazhu/BugPack/main/assets/demo.gif)

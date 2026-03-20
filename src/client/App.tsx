@@ -15,6 +15,7 @@ export default function App() {
   const { bugs, selectedBugId, viewMode, settingsOpen, shortcutsOpen, projects, locale, fetchSettings, fetchProjects, createProject, createBug, pasteScreenshot } = useStore()
   const [initLoaded, setInitLoaded] = useState(false)
   const [newProjectName, setNewProjectName] = useState('')
+  const initRef = useRef(false)
 
   const selectedBug = bugs.find((b) => b.id === selectedBugId)
 
@@ -52,13 +53,15 @@ export default function App() {
 
   useKeyboard()
 
-  // Init: load settings (restore last project ID), then load project list
+  // 初始化：加载设置（恢复上次项目ID），然后加载项目列表
   useEffect(() => {
+    if (initRef.current) return
+    initRef.current = true
     fetchSettings()
       .then(() => fetchProjects())
       .then(() => setInitLoaded(true))
-      .catch((e) => { console.error('Initialization failed:', e); setInitLoaded(true) })
-  }, [fetchSettings, fetchProjects])
+      .catch((e) => { console.error('初始化失败:', e); setInitLoaded(true) })
+  }, [])
 
   // Global Ctrl+V paste screenshot (capture phase)
   const handlePaste = useCallback((e: ClipboardEvent) => {

@@ -107,7 +107,8 @@ export function Sidebar({ width }: { width?: number }) {
     return true
   }).filter((bug) => {
     if (!searchQuery) return true
-    return bug.title.toLowerCase().includes(searchQuery.toLowerCase())
+    const q = searchQuery.toLowerCase()
+    return bug.title.toLowerCase().includes(q) || String(bug.number).includes(q)
   })
 
   const {

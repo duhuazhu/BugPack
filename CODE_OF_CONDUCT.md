@@ -1,3 +1,5 @@
+English | [中文](CODE_OF_CONDUCT.zh-CN.md)
+
 # Contributor Covenant Code of Conduct
 
 ## Our Pledge
