@@ -60,18 +60,13 @@ Open `http://localhost:3456` and `Ctrl+V` your first bug screenshot to get start
 
 BugPack works with **any MCP-compatible AI coding tool**. Here are common examples — configure other tools the same way.
 
-**Claude Code** (CLI one-liner):
-
-```bash
-claude mcp add bugpack -- npx bugpack-mcp --mcp
-```
-
-Or add to `~/.claude/claude_code_config.json`:
+**Claude Code** — add to `~/.claude.json`:
 
 ```json
 {
   "mcpServers": {
     "bugpack": {
+      "type": "stdio",
       "command": "npx",
       "args": ["bugpack-mcp", "--mcp"]
     }

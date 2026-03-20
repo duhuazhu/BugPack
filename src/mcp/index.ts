@@ -141,7 +141,7 @@ server.tool(
   'Get full bug context (annotated screenshots + fix instructions) for AI repair',
   {
     bug_id: z.string().optional().describe('Bug ID'),
-    bug_number: z.number().optional().describe('Bug number within project, e.g. 1, 2, 3'),
+    bug_number: z.coerce.number().optional().describe('Bug number within project, e.g. 1, 2, 3'),
     project: z.string().optional().describe('Project name to locate bug number within'),
   },
   async ({ bug_id, bug_number, project }) => {
@@ -238,8 +238,8 @@ server.tool(
   'get_bug_screenshot',
   'Get annotated screenshot of a bug',
   {
-    bug_number: z.number().describe('Bug number within project'),
-    screenshot_index: z.number().optional().describe('Screenshot index (0-based), defaults to first'),
+    bug_number: z.coerce.number().describe('Bug number within project'),
+    screenshot_index: z.coerce.number().optional().describe('Screenshot index (0-based), defaults to first'),
     project: z.string().optional().describe('Project name'),
   },
   async ({ bug_number, screenshot_index = 0, project }) => {
@@ -298,7 +298,7 @@ server.tool(
   'mark_bug_status',
   'Update bug status (pending/fixed/closed etc.)',
   {
-    bug_number: z.number().describe('Bug number within project'),
+    bug_number: z.coerce.number().describe('Bug number within project'),
     status: z.enum(['pending', 'annotating', 'generated', 'fixed', 'closed']).describe('New status'),
     project: z.string().optional().describe('Project name'),
   },
@@ -327,7 +327,7 @@ server.tool(
   'add_fix_note',
   'Add fix notes to bug description after AI repair',
   {
-    bug_number: z.number().describe('Bug number within project'),
+    bug_number: z.coerce.number().describe('Bug number within project'),
     note: z.string().describe('Fix notes'),
     project: z.string().optional().describe('Project name'),
   },
