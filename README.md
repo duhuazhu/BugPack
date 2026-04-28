@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/duhuazhu-bugpack-badge.png)](https://mseep.ai/app/duhuazhu-bugpack)
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/duhuazhu/BugPack/main/public/favicon.svg" width="80" alt="BugPack">
 </p>
