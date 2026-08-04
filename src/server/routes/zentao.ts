@@ -179,9 +179,9 @@ zentaoRouter.post('/import/:id', async (req, res) => {
     const priMap: Record<number, string> = { 1: 'high', 2: 'high', 3: 'medium', 4: 'low' }
     const priority = priMap[data.pri] || 'medium'
 
-    db.prepare(`INSERT INTO bugs (id, number, title, description, status, priority, page_path, device, browser, related_files, project_id, created_at, updated_at)
-      VALUES (?, ?, ?, ?, 'pending', ?, '', '', '', '[]', ?, ?, ?)`).run(
-      bugId, number, data.title, desc, priority, projectId, now, now
+    db.prepare(`INSERT INTO bugs (id, number, title, description, status, priority, page_path, device, browser, related_files, project_id, external_id, created_at, updated_at)
+      VALUES (?, ?, ?, ?, 'pending', ?, '', '', '', '[]', ?, ?, ?, ?)`).run(
+      bugId, number, data.title, desc, priority, projectId, String(data.id ?? ''), now, now
     )
 
     // Download images: extract inline images from steps HTML + file attachments

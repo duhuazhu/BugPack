@@ -145,9 +145,9 @@ jiraRouter.post('/import/:key', async (req, res) => {
     if (priName.includes('high') || priName.includes('critical') || priName.includes('blocker')) priority = 'high'
     else if (priName.includes('low') || priName.includes('trivial')) priority = 'low'
 
-    db.prepare(`INSERT INTO bugs (id, number, title, description, status, priority, page_path, device, browser, related_files, project_id, created_at, updated_at)
-      VALUES (?, ?, ?, ?, 'pending', ?, '', '', '', '[]', ?, ?, ?)`).run(
-      bugId, number, fields.summary, desc, priority, projectId, now, now
+    db.prepare(`INSERT INTO bugs (id, number, title, description, status, priority, page_path, device, browser, related_files, project_id, external_id, created_at, updated_at)
+      VALUES (?, ?, ?, ?, 'pending', ?, '', '', '', '[]', ?, ?, ?, ?)`).run(
+      bugId, number, fields.summary, desc, priority, projectId, String(data.key ?? ''), now, now
     )
 
     // Download image attachments

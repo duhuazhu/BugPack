@@ -9,7 +9,7 @@ export const en = {
     shortcuts: 'Shortcuts',
   },
   sidebar: {
-    searchPlaceholder: 'Search bugs...',
+    searchPlaceholder: 'Search title / number / source ID...',
     newBug: '+ New Bug',
     filterAll: 'All',
     filterPending: 'Pending',

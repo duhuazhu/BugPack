@@ -104,5 +104,33 @@ try {
   // Column already exists, ignore
 }
 
+// Migration: add external_id (原始系统的 bug 编号，如禅道id，用于一一对应)
+try {
+  db.exec(`ALTER TABLE bugs ADD COLUMN external_id TEXT NOT NULL DEFAULT ''`)
+} catch {
+  // Column already exists, ignore
+}
+
+// Migration: 回填历史数据的 external_id，从 description 的导入前缀提取（仅填充为空的，幂等）
+try {
+  const rows = db.prepare(
+    `SELECT id, description FROM bugs WHERE external_id = '' AND description LIKE '[Imported from %'`
+  ).all() as { id: string; description: string }[]
+  if (rows.length > 0) {
+    // 匹配禅道/TAPD: #数字；Jira/Linear: 编号(如 PROJ-1)
+    const re = /^\[Imported from \w+ #?([A-Za-z0-9-]+)\]/
+    const update = db.prepare(`UPDATE bugs SET external_id = ? WHERE id = ?`)
+    const run = db.transaction((items: { id: string; description: string }[]) => {
+      for (const r of items) {
+        const m = r.description.match(re)
+        if (m && m[1]) update.run(m[1], r.id)
+      }
+    })
+    run(rows)
+  }
+} catch {
+  // 回填失败不影响启动
+}
+
 
 export { db, DATA_DIR, UPLOADS_DIR }

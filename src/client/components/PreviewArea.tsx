@@ -109,6 +109,9 @@ export function PreviewArea({ bug }: { bug: Bug }) {
         <div className="sticky top-0 bg-bg-primary/90 backdrop-blur-sm border-b border-border px-6 py-3 flex items-center justify-between z-10">
           <h2 className="text-sm text-text-secondary">
             Bug #{String(bug.number).padStart(3, '0')}
+            {bug.externalId && (
+              <span className="ml-2 text-xs text-accent">[{bug.externalId}]</span>
+            )}
           </h2>
           <div className="flex items-center gap-2">
             <button

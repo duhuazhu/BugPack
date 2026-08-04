@@ -9,7 +9,7 @@ export const zh = {
     shortcuts: '快捷键',
   },
   sidebar: {
-    searchPlaceholder: '搜索 Bug...',
+    searchPlaceholder: '搜索标题 / 编号 / 禅道ID...',
     newBug: '+ 新建 Bug',
     filterAll: '全部',
     filterPending: '待处理',

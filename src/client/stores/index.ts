@@ -33,6 +33,7 @@ export interface Bug {
   device: string
   browser: string
   relatedFiles: string[]
+  externalId: string
   createdAt: string
 }
 
@@ -49,6 +50,7 @@ function toBug(raw: ApiBug): Bug {
     device: raw.device ?? '',
     browser: raw.browser ?? '',
     relatedFiles: raw.relatedFiles || [],
+    externalId: raw.external_id ?? '',
     createdAt: raw.created_at,
   }
 }

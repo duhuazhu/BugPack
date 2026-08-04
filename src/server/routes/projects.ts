@@ -102,6 +102,7 @@ projectsRouter.get('/:id/export', (req, res) => {
       device: bug.device,
       browser: bug.browser,
       related_files: bug.related_files,
+      external_id: bug.external_id,
       created_at: bug.created_at,
       updated_at: bug.updated_at,
       screenshots: ssExport,
@@ -166,8 +167,8 @@ projectsRouter.post('/:id/import', zipUpload.single('file'), (req, res) => {
         const last: any = db.prepare('SELECT MAX(number) as maxNum FROM bugs WHERE project_id = ?').get(projectId)
         const number = (last?.maxNum || 0) + 1
 
-        db.prepare(`INSERT INTO bugs (id, number, title, description, status, priority, page_path, device, browser, related_files, project_id, created_at, updated_at)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`).run(
+        db.prepare(`INSERT INTO bugs (id, number, title, description, status, priority, page_path, device, browser, related_files, project_id, external_id, created_at, updated_at)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`).run(
           bugId, number,
           bugData.title || '',
           bugData.description || '',
@@ -178,6 +179,7 @@ projectsRouter.post('/:id/import', zipUpload.single('file'), (req, res) => {
           bugData.browser || '',
           bugData.related_files || '[]',
           projectId,
+          bugData.external_id || '',
           bugData.created_at || now,
           bugData.updated_at || now,
         )

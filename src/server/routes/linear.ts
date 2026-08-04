@@ -154,9 +154,9 @@ linearRouter.post('/import/:id', async (req, res) => {
     const priMap: Record<number, string> = { 0: 'medium', 1: 'high', 2: 'high', 3: 'medium', 4: 'low' }
     const priority = priMap[issue.priority] || 'medium'
 
-    db.prepare(`INSERT INTO bugs (id, number, title, description, status, priority, page_path, device, browser, related_files, project_id, created_at, updated_at)
-      VALUES (?, ?, ?, ?, 'pending', ?, '', '', '', '[]', ?, ?, ?)`).run(
-      bugId, number, issue.title, desc, priority, projectId, now, now
+    db.prepare(`INSERT INTO bugs (id, number, title, description, status, priority, page_path, device, browser, related_files, project_id, external_id, created_at, updated_at)
+      VALUES (?, ?, ?, ?, 'pending', ?, '', '', '', '[]', ?, ?, ?, ?)`).run(
+      bugId, number, issue.title, desc, priority, projectId, String(issue.identifier ?? ''), now, now
     )
 
     // Download image attachments

@@ -97,7 +97,7 @@ server.tool(
 
     const where = conditions.length > 0 ? ' WHERE ' + conditions.join(' AND ') : ''
     const query = `
-      SELECT b.id, b.number, b.title, b.status, b.priority, b.project_id, b.created_at,
+      SELECT b.id, b.number, b.title, b.status, b.priority, b.project_id, b.created_at, b.external_id,
         (SELECT COUNT(*) FROM screenshots WHERE bug_id = b.id) as screenshot_count
       FROM bugs b${where}
       ORDER BY b.project_id, b.number DESC
@@ -121,7 +121,8 @@ server.tool(
     for (const group of Object.values(groups)) {
       lines.push(`## ${group.name || 'Uncategorized'}`)
       for (const b of group.bugs) {
-        lines.push(`  #${String(b.number).padStart(3, '0')} [${b.status}] [${b.priority}] ${b.title} (${b.screenshot_count} screenshots)`)
+        const extTag = b.external_id ? ` [源:${b.external_id}]` : ''
+        lines.push(`  #${String(b.number).padStart(3, '0')}${extTag} [${b.status}] [${b.priority}] ${b.title} (${b.screenshot_count} screenshots)`)
       }
       lines.push('')
     }
@@ -168,6 +169,7 @@ server.tool(
     const lines: string[] = []
     const projectPrefix = projectName ? `[${projectName}] ` : ''
     lines.push(`# ${projectPrefix}Bug #${String(bug.number).padStart(3, '0')}: ${bug.title}`)
+    if (bug.external_id) lines.push(`> 原始系统编号: ${bug.external_id}`)
     lines.push('')
 
     if (bug.description) {

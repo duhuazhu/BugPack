@@ -156,9 +156,9 @@ tapdRouter.post('/import/:id', async (req, res) => {
     if (priLabel.includes('紧急') || priLabel.includes('urgent') || priLabel.includes('high')) priority = 'high'
     else if (priLabel.includes('低') || priLabel.includes('low')) priority = 'low'
 
-    db.prepare(`INSERT INTO bugs (id, number, title, description, status, priority, page_path, device, browser, related_files, project_id, created_at, updated_at)
-      VALUES (?, ?, ?, ?, 'pending', ?, '', '', '', '[]', ?, ?, ?)`).run(
-      bugId, number, tapdBug.title, desc, priority, projectId, now, now
+    db.prepare(`INSERT INTO bugs (id, number, title, description, status, priority, page_path, device, browser, related_files, project_id, external_id, created_at, updated_at)
+      VALUES (?, ?, ?, ?, 'pending', ?, '', '', '', '[]', ?, ?, ?, ?)`).run(
+      bugId, number, tapdBug.title, desc, priority, projectId, String(tapdBug.id ?? ''), now, now
     )
 
     // Download image attachments

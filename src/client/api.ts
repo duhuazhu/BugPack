@@ -27,6 +27,7 @@ export interface ApiBug {
   related_files?: string
   relatedFiles: string[]
   screenshots: ApiScreenshot[]
+  external_id?: string
   created_at: string
   updated_at: string
 }

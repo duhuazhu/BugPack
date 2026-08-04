@@ -108,7 +108,9 @@ export function Sidebar({ width }: { width?: number }) {
   }).filter((bug) => {
     if (!searchQuery) return true
     const q = searchQuery.toLowerCase()
-    return bug.title.toLowerCase().includes(q) || String(bug.number).includes(q)
+    return bug.title.toLowerCase().includes(q)
+      || String(bug.number).includes(q)
+      || (bug.externalId ? bug.externalId.toLowerCase().includes(q) : false)
   })
 
   const {
@@ -294,6 +296,15 @@ export function Sidebar({ width }: { width?: number }) {
                         : <Square className="w-3.5 h-3.5 text-text-muted" />
                     )}
                     <span className="text-xs text-text-muted">#{String(bug.number).padStart(3, '0')}</span>
+                    {bug.externalId && (
+                      <span
+                        title={zh ? '原始系统编号' : 'Source ID'}
+                        className="flex items-center gap-0.5 text-[10px] px-1 py-0.5 rounded bg-bg-input text-accent"
+                      >
+                        <ExternalLink className="w-2.5 h-2.5" />
+                        {bug.externalId}
+                      </span>
+                    )}
                   </div>
                   <button
                     onClick={(e) => {
