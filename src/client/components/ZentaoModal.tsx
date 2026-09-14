@@ -34,18 +34,20 @@ export function ZentaoModal({ onClose }: { onClose: () => void }) {
   const [batchImporting, setBatchImporting] = useState(false)
   const [step, setStep] = useState<'products' | 'bugs'>(settings.zentaoProductId ? 'bugs' : 'products')
 
-  // Load product list
-  const loadProducts = async () => {
-    setLoading(true)
-    setError('')
+  // 加载产品列表，silent 时仅静默补齐名称，不影响当前页面状态
+  const loadProducts = async (silent = false) => {
+    if (!silent) {
+      setLoading(true)
+      setError('')
+    }
     try {
       const res = await api.zentao.getProducts()
       if (!res.ok) throw new Error(res.error || 'Failed to fetch products')
       setProducts(res.products || [])
     } catch (e: any) {
-      setError(e.message)
+      if (!silent) setError(e.message)
     } finally {
-      setLoading(false)
+      if (!silent) setLoading(false)
     }
   }
 
@@ -74,6 +76,7 @@ export function ZentaoModal({ onClose }: { onClose: () => void }) {
   useEffect(() => {
     if (settings.zentaoProductId) {
       loadBugs(settings.zentaoProductId)
+      loadProducts(true) // 静默拉产品列表，顶部切换按钮显示名称而不是 ID
     } else {
       loadProducts()
     }
