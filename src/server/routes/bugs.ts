@@ -74,7 +74,7 @@ bugsRouter.get('/', (req, res) => {
     relatedFiles: safeJsonParse(bug.related_files, []),
     screenshots: getScreenshots.all(bug.id).map((s: any) => ({
       id: s.id,
-      url: `/uploads/${s.filename}`,
+      url: `uploads/${s.filename}`,
       name: s.name,
       annotated: !!s.annotated,
       annotations: safeJsonParse(s.annotations, []),
@@ -96,7 +96,7 @@ bugsRouter.get('/:id', (req, res) => {
     relatedFiles: safeJsonParse(bug.related_files, []),
     screenshots: screenshots.map((s: any) => ({
       id: s.id,
-      url: `/uploads/${s.filename}`,
+      url: `uploads/${s.filename}`,
       name: s.name,
       annotated: !!s.annotated,
       annotations: safeJsonParse(s.annotations, []),
@@ -189,7 +189,7 @@ bugsRouter.patch('/:id', (req, res) => {
     relatedFiles: safeJsonParse(updated.related_files, []),
     screenshots: screenshots.map((s: any) => ({
       id: s.id,
-      url: `/uploads/${s.filename}`,
+      url: `uploads/${s.filename}`,
       name: s.name,
       annotated: !!s.annotated,
       annotations: safeJsonParse(s.annotations, []),
@@ -239,7 +239,7 @@ bugsRouter.post('/:id/screenshots', upload.single('file'), (req, res) => {
 
   res.status(201).json({
     id,
-    url: `/uploads/${relPath}`,
+    url: `uploads/${relPath}`,
     name,
     annotated: false,
     annotations: [],
@@ -280,7 +280,7 @@ bugsRouter.post('/:id/screenshots/paste', (req, res) => {
 
   res.status(201).json({
     id,
-    url: `/uploads/${relPath}`,
+    url: `uploads/${relPath}`,
     name,
     annotated: false,
     annotations: [],

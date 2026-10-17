@@ -4,6 +4,8 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react()],
+  // 相对路径，可部署在任意子路径下（如 /bugpack/）
+  base: './',
   build: {
     outDir: 'dist/client',
   },

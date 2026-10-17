@@ -8,7 +8,7 @@ export function EmptyState() {
     <div className="h-full flex items-center justify-center">
       <div className="text-center">
         <div className="flex items-center justify-center mb-4">
-          <img src="/favicon.svg" alt="BugPack" className="w-12 h-12" />
+          <img src="favicon.svg" alt="BugPack" className="w-12 h-12" />
         </div>
 
         <h2 className="text-xl font-semibold text-text-primary mb-2">

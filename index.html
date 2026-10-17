@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Pack bug screenshots into AI-ready fix instructions with MCP Server integration" />
     <meta name="theme-color" content="#002FA7" />
@@ -15,7 +15,7 @@
       // Sync theme before render to prevent flash
       try {
         var xhr = new XMLHttpRequest()
-        xhr.open('GET', '/api/settings', false)
+        xhr.open('GET', 'api/settings', false)
         xhr.send()
         if (xhr.status === 200) {
           var data = JSON.parse(xhr.responseText)

@@ -78,7 +78,7 @@ export function Navbar() {
     <header className="h-12 bg-bg-primary border-b border-border flex items-center justify-between px-4 shrink-0">
       {/* Left Logo */}
       <div className="flex items-center gap-2">
-        <img src="/favicon.svg" alt="BugPack" className="w-7 h-7" />
+        <img src="favicon.svg" alt="BugPack" className="w-7 h-7" />
         <span className="text-base font-bold tracking-tight text-text-primary">{t.app.name}</span>
       </div>
 

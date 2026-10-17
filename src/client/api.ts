@@ -1,4 +1,4 @@
-const BASE = '/api'
+const BASE = 'api'
 
 // Generic request
 async function request<T>(url: string, options?: RequestInit): Promise<T> {
@@ -182,7 +182,7 @@ export const api = {
     request<{ ok: boolean }>(`/projects/${id}`, { method: 'DELETE' }),
 
   // Export project data
-  exportProject: (id: string) => `/api/projects/${id}/export`,
+  exportProject: (id: string) => `api/projects/${id}/export`,
 
   // Import project data (ZIP file)
   importProject: async (id: string, file: File) => {

@@ -130,7 +130,7 @@ export default function App() {
       <div className="flex flex-col h-screen bg-bg-primary text-text-primary font-sans items-center justify-center">
         <div className="text-center max-w-sm">
           <div className="flex items-center justify-center mb-6">
-            <img src="/favicon.svg" alt="BugPack" className="w-14 h-14" />
+            <img src="favicon.svg" alt="BugPack" className="w-14 h-14" />
           </div>
           <h1 className="text-2xl font-bold mb-2">BugPack</h1>
           <p className="text-sm text-text-muted mb-8">
