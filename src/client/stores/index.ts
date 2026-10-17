@@ -76,6 +76,9 @@ interface AppState {
 
   theme: Theme
   viewMode: ViewMode
+  // 手机端是否显示详情页（桌面端忽略）
+  mobileDetailOpen: boolean
+  setMobileDetailOpen: (open: boolean) => void
   settingsOpen: boolean
   shortcutsOpen: boolean
 
@@ -107,7 +110,7 @@ interface AppState {
   switchProject: (id: string) => Promise<void>
   deleteProject: (id: string) => Promise<void>
 
-  selectBug: (id: string) => void
+  selectBug: (id: string, openDetail?: boolean) => void
   clearSelection: () => void
   setFilterTab: (tab: FilterTab) => void
   setSearchQuery: (query: string) => void
@@ -141,6 +144,8 @@ export const useStore = create<AppState>((set, get) => ({
 
   theme: 'dark' as Theme,
   viewMode: 'edit',
+  mobileDetailOpen: false,
+  setMobileDetailOpen: (open) => set({ mobileDetailOpen: open }),
   settingsOpen: false,
   shortcutsOpen: false,
 
@@ -171,7 +176,7 @@ export const useStore = create<AppState>((set, get) => ({
   createBug: async (title) => {
     const raw = await api.createBug({ title: title || '', project_id: get().currentProjectId })
     const bug = toBug(raw)
-    set((s) => ({ bugs: [bug, ...s.bugs], selectedBugId: bug.id, viewMode: 'edit' }))
+    set((s) => ({ bugs: [bug, ...s.bugs], selectedBugId: bug.id, viewMode: 'edit', mobileDetailOpen: true }))
     return bug
   },
 
@@ -358,6 +363,7 @@ export const useStore = create<AppState>((set, get) => ({
       currentProject: project?.name || '',
       bugs: [],
       selectedBugId: null,
+      mobileDetailOpen: false,
       loading: true,
     })
     api.saveSettings({ currentProjectId: id }).catch(() => {})
@@ -377,8 +383,8 @@ export const useStore = create<AppState>((set, get) => ({
     }
   },
 
-  selectBug: (id) => set({ selectedBugId: id, viewMode: 'edit' }),
-  clearSelection: () => set({ selectedBugId: null }),
+  selectBug: (id, openDetail = true) => set((s) => ({ selectedBugId: id, viewMode: 'edit', mobileDetailOpen: openDetail || s.mobileDetailOpen })),
+  clearSelection: () => set({ selectedBugId: null, mobileDetailOpen: false }),
   setTheme: (theme) => {
     if (theme === 'light') {
       document.documentElement.classList.add('light')

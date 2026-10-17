@@ -171,7 +171,7 @@ export function Sidebar({ width }: { width?: number }) {
   }
 
   return (
-    <aside style={{ width: width ?? 240 }} className="bg-bg-sidebar border-r border-border flex flex-col shrink-0">
+    <aside style={width ? { width } : undefined} className={`bg-bg-sidebar border-r border-border flex flex-col shrink-0 ${width ? '' : 'w-full'}`}>
       {/* Search + New */}
       <div className="p-3 space-y-2">
         {/* Search bar */}
@@ -215,7 +215,7 @@ export function Sidebar({ width }: { width?: number }) {
               <ChevronDown className="w-2.5 h-2.5" />
             </button>
             {importDropdown && (
-              <div className="absolute top-full left-0 mt-1 w-40 bg-bg-card border border-border rounded-lg shadow-xl z-50 overflow-hidden">
+              <div className="absolute top-full right-0 md:right-auto md:left-0 mt-1 w-40 bg-bg-card border border-border rounded-lg shadow-xl z-50 overflow-hidden">
                 <button
                   onClick={() => { setZentaoOpen(true); setImportDropdown(false) }}
                   className="w-full text-left px-3 py-2 text-sm text-text-secondary hover:bg-bg-hover transition-colors"
@@ -313,7 +313,8 @@ export function Sidebar({ width }: { width?: number }) {
                         setStatusDropdown(null)
                       } else {
                         const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
-                        setStatusDropdownPos({ x: rect.right + 4, y: rect.bottom })
+                        // 防止弹出菜单超出屏幕右边
+                        setStatusDropdownPos({ x: Math.min(rect.right + 4, window.innerWidth - 112), y: rect.bottom })
                         setStatusDropdown(bug.id)
                       }
                     }}
@@ -340,7 +341,7 @@ export function Sidebar({ width }: { width?: number }) {
                         e.stopPropagation()
                         setDeleteTarget({ id: bug.id, number: bug.number })
                       }}
-                      className="p-0.5 text-text-muted hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="p-1.5 -m-1 md:p-0.5 md:m-0 text-text-muted hover:text-red-400 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
                     >
                       <Trash2 className="w-3 h-3" />
                     </button>
@@ -439,7 +440,8 @@ export function Sidebar({ width }: { width?: number }) {
                     // 状态变化时，自动跳转到下一个待处理的 bug
                     const nextPending = bugs.find(b => b.id !== bugId && (b.status === 'pending' || b.status === 'annotating'))
                     if (nextPending) {
-                      selectBug(nextPending.id)
+                      // 只切换选中，手机端不跳进详情页
+                      selectBug(nextPending.id, false)
                     } else {
                       // 没有待处理的 bug，清空选中状态
                       clearSelection()
@@ -448,7 +450,7 @@ export function Sidebar({ width }: { width?: number }) {
                 }
                 setStatusDropdown(null)
               }}
-              className={`block text-left whitespace-nowrap px-2.5 py-1 text-[11px] transition-colors ${
+              className={`block text-left whitespace-nowrap px-3 py-2 text-sm md:px-2.5 md:py-1 md:text-[11px] transition-colors ${
                 bugs.find(b => b.id === statusDropdown)?.status === s
                   ? 'bg-accent/10 text-accent'
                   : 'text-text-secondary hover:bg-bg-hover'

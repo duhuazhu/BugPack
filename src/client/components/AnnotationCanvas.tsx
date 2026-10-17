@@ -25,6 +25,15 @@ interface TextInputState {
 // Number counter
 let numberCounter = 1
 
+// 取鼠标或第一根手指的屏幕坐标
+function clientPoint(e: fabric.TPointerEvent) {
+  if ('touches' in e) {
+    const t = e.touches[0] ?? e.changedTouches[0]
+    return { x: t?.clientX ?? 0, y: t?.clientY ?? 0 }
+  }
+  return { x: e.clientX, y: e.clientY }
+}
+
 export function AnnotationCanvas({ imageUrl, color, tool, lineWidth, zoom, onZoomChange, onAnnotated, initialAnnotations, onSaveAnnotations }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -221,6 +230,44 @@ export function AnnotationCanvas({ imageUrl, color, tool, lineWidth, zoom, onZoo
     return () => { fc.off('mouse:wheel', handleWheel) }
   }, [zoom, onZoomChange])
 
+  // 双指缩放（手机）
+  const zoomRef = useRef(zoom)
+  zoomRef.current = zoom
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    let startDist = 0
+    let startZoom = 100
+    const dist = (t: TouchList) => Math.hypot(t[0]!.clientX - t[1]!.clientX, t[0]!.clientY - t[1]!.clientY)
+
+    const onStart = (e: TouchEvent) => {
+      if (e.touches.length === 2) {
+        startDist = dist(e.touches)
+        startZoom = zoomRef.current
+      }
+    }
+    const onMove = (e: TouchEvent) => {
+      if (e.touches.length !== 2 || !startDist) return
+      e.preventDefault()
+      const z = Math.round(Math.max(25, Math.min(300, startZoom * dist(e.touches) / startDist)))
+      if (z !== zoomRef.current) onZoomChange(z)
+    }
+    const onEnd = (e: TouchEvent) => {
+      if (e.touches.length < 2) startDist = 0
+    }
+
+    el.addEventListener('touchstart', onStart, { passive: true })
+    el.addEventListener('touchmove', onMove, { passive: false })
+    el.addEventListener('touchend', onEnd)
+    el.addEventListener('touchcancel', onEnd)
+    return () => {
+      el.removeEventListener('touchstart', onStart)
+      el.removeEventListener('touchmove', onMove)
+      el.removeEventListener('touchend', onEnd)
+      el.removeEventListener('touchcancel', onEnd)
+    }
+  }, [onZoomChange])
+
   // Commit pending text input when switching tools
   useEffect(() => {
     if (textInput) commitTextInput()
@@ -304,21 +351,23 @@ export function AnnotationCanvas({ imageUrl, color, tool, lineWidth, zoom, onZoo
 
     const handleDown = (opt: fabric.TPointerEventInfo<fabric.TPointerEvent>) => {
       isDragging = true
-      const e = opt.e as MouseEvent
-      lastX = e.clientX
-      lastY = e.clientY
+      const p = clientPoint(opt.e)
+      lastX = p.x
+      lastY = p.y
       fc.defaultCursor = 'grabbing'
       fc.hoverCursor = 'grabbing'
     }
 
     const handleMove = (opt: fabric.TPointerEventInfo<fabric.TPointerEvent>) => {
       if (!isDragging) return
-      const e = opt.e as MouseEvent
+      // 双指缩放时不平移
+      if ('touches' in opt.e && opt.e.touches.length > 1) return
+      const p = clientPoint(opt.e)
       const vpt = fc.viewportTransform!
-      vpt[4] += e.clientX - lastX
-      vpt[5] += e.clientY - lastY
-      lastX = e.clientX
-      lastY = e.clientY
+      vpt[4] += p.x - lastX
+      vpt[5] += p.y - lastY
+      lastX = p.x
+      lastY = p.y
       fc.requestRenderAll()
     }
 
@@ -751,7 +800,7 @@ export function AnnotationCanvas({ imageUrl, color, tool, lineWidth, zoom, onZoo
   }, [performUndo, performRedo, performReset, handleFitWindow])
 
   return (
-    <div ref={containerRef} className="w-full h-full relative">
+    <div ref={containerRef} className="w-full h-full relative touch-none">
       <canvas ref={canvasRef} />
       {textInput && (
         <textarea

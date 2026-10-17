@@ -32,8 +32,8 @@ export function ConfirmDialog({ open, title, message, confirmText, cancelText, o
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={onCancel}>
-      <div className="w-[360px] bg-bg-card border border-border rounded-xl shadow-2xl p-6" onClick={(e) => e.stopPropagation()}>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" onClick={onCancel}>
+      <div className="w-[360px] max-w-full bg-bg-card border border-border rounded-xl shadow-2xl p-6" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-start gap-3 mb-4">
           <div className="p-2 bg-red-500/10 rounded-lg shrink-0">
             <AlertTriangle className="w-5 h-5 text-red-400" />

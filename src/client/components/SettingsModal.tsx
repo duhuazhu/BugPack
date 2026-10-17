@@ -129,28 +129,28 @@ export function SettingsModal() {
     : navItems
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="w-full max-w-[900px] h-[640px] bg-bg-card border border-border rounded-xl shadow-2xl flex flex-col overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm md:p-4">
+      <div className="w-full max-w-[900px] h-dvh md:h-[640px] md:max-h-full bg-bg-card md:border border-border md:rounded-xl shadow-2xl flex flex-col overflow-hidden pb-[env(safe-area-inset-bottom)] md:pb-0">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-border shrink-0">
+        <div className="flex items-center justify-between px-4 md:px-6 py-3 md:py-4 border-b border-border shrink-0">
           <div className="flex items-center gap-3">
             <Settings className="w-5 h-5 text-accent" />
             <h2 className="text-lg font-bold text-text-primary">{t.settings.title}</h2>
           </div>
           <button
             onClick={() => setSettingsOpen(false)}
-            className="text-text-secondary hover:text-text-primary transition-colors"
+            className="p-1 -m-1 text-text-secondary hover:text-text-primary transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Body: two columns */}
-        <div className="flex flex-1 overflow-hidden">
+        {/* Body: two columns（手机上导航在顶部横排） */}
+        <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
           {/* Left navigation */}
-          <div className="w-56 border-r border-border flex flex-col bg-bg-input/50 shrink-0">
+          <div className="md:w-56 border-b md:border-b-0 md:border-r border-border flex flex-col bg-bg-input/50 shrink-0">
             {/* Search */}
-            <div className="p-3">
+            <div className="p-3 hidden md:block">
               <div className="relative">
                 <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-secondary" />
                 <input
@@ -163,12 +163,12 @@ export function SettingsModal() {
               </div>
             </div>
             {/* Navigation list */}
-            <nav className="flex-1 px-2 space-y-0.5 overflow-y-auto">
+            <nav className="flex md:block md:flex-1 px-2 py-2 md:py-0 gap-1 md:space-y-0.5 overflow-x-auto md:overflow-x-hidden md:overflow-y-auto no-scrollbar">
               {filteredNav.map(({ key, label, icon: Icon }) => (
                 <button
                   key={key}
                   onClick={() => setActiveTab(key)}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm whitespace-nowrap transition-colors ${
+                  className={`shrink-0 md:w-full flex items-center gap-2 md:gap-3 px-3 py-2 rounded-md text-sm whitespace-nowrap transition-colors ${
                     activeTab === key
                       ? 'bg-accent/15 text-accent font-medium'
                       : 'text-text-secondary hover:bg-bg-hover hover:text-text-primary'
@@ -182,7 +182,7 @@ export function SettingsModal() {
           </div>
 
           {/* Right content */}
-          <div className="flex-1 overflow-y-auto p-6">
+          <div className="flex-1 overflow-y-auto p-4 md:p-6">
             <div className="max-w-xl">
 
               {/* Project config */}
@@ -311,14 +311,14 @@ export function SettingsModal() {
                       </div>
                       <div>
                         <label className="text-xs text-text-secondary block mb-1.5">{locale === 'zh' ? '公司网关认证（HTTP Basic Auth）' : 'Gateway Auth (HTTP Basic Auth)'}</label>
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 gap-2">
                           <input type="text" value={form.zentaoHttpUser} onChange={(e) => updateField('zentaoHttpUser', e.target.value)} placeholder={locale === 'zh' ? '网关账号' : 'Gateway user'} className={inputCls} />
                           <input type="password" value={form.zentaoHttpPass} onChange={(e) => updateField('zentaoHttpPass', e.target.value)} placeholder={locale === 'zh' ? '网关密码' : 'Gateway password'} className={inputCls} />
                         </div>
                       </div>
                       <div>
                         <label className="text-xs text-text-secondary block mb-1.5">{locale === 'zh' ? '禅道系统账号' : 'Zentao Account'}</label>
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 gap-2">
                           <input type="text" value={form.zentaoAccount} onChange={(e) => updateField('zentaoAccount', e.target.value)} placeholder={locale === 'zh' ? '禅道用户名' : 'Username'} className={inputCls} />
                           <input type="password" value={form.zentaoPassword} onChange={(e) => updateField('zentaoPassword', e.target.value)} placeholder={locale === 'zh' ? '禅道密码' : 'Password'} className={inputCls} />
                         </div>
@@ -364,7 +364,7 @@ export function SettingsModal() {
                       </div>
                       <div>
                         <label className="text-xs text-text-secondary block mb-1.5">{locale === 'zh' ? 'Jira 账号' : 'Jira Account'}</label>
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 gap-2">
                           <input type="text" value={form.jiraEmail} onChange={(e) => updateField('jiraEmail', e.target.value)} placeholder={locale === 'zh' ? '邮箱地址' : 'Email'} className={inputCls} />
                           <input type="password" value={form.jiraToken} onChange={(e) => updateField('jiraToken', e.target.value)} placeholder="API Token" className={inputCls} />
                         </div>
@@ -447,7 +447,7 @@ export function SettingsModal() {
                       </span>
                       <div>
                         <label className="text-xs text-text-secondary block mb-1.5">{locale === 'zh' ? 'API 账号' : 'API Account'}</label>
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 gap-2">
                           <input type="text" value={form.tapdApiUser} onChange={(e) => updateField('tapdApiUser', e.target.value)} placeholder={locale === 'zh' ? 'API 账号' : 'API User'} className={inputCls} />
                           <input type="password" value={form.tapdApiPassword} onChange={(e) => updateField('tapdApiPassword', e.target.value)} placeholder={locale === 'zh' ? 'API 密码' : 'API Password'} className={inputCls} />
                         </div>

@@ -54,7 +54,7 @@ export function PropertyPanel({ bug, width }: { bug: Bug; width?: number }) {
   }, [bug.id, updateBug])
 
   return (
-    <aside style={{ width: width ?? 320 }} className="bg-bg-sidebar border-l border-border flex flex-col shrink-0 overflow-y-auto">
+    <aside style={width ? { width } : undefined} className={`bg-bg-sidebar border-l border-border flex flex-col shrink-0 overflow-y-auto ${width ? '' : 'w-full'}`}>
       {/* Bug info */}
       <Section title={t.panel.bugInfo}>
         <div>
@@ -129,7 +129,7 @@ export function PropertyPanel({ bug, width }: { bug: Bug; width?: number }) {
         >
           <Zap className="w-4 h-4" />
           {t.panel.generateBtn}
-          <span className="text-xs opacity-60 ml-1">{t.panel.generateShortcut}</span>
+          <span className="text-xs opacity-60 ml-1 hidden md:inline">{t.panel.generateShortcut}</span>
         </button>
         <div className="flex gap-2">
           <button

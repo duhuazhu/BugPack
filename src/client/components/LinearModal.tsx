@@ -146,10 +146,10 @@ export function LinearModal({ onClose }: { onClose: () => void }) {
   const curTeam = teams.find(t => t.id === selectedTeamId)
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="w-[600px] max-h-[80vh] bg-bg-card border border-border rounded-2xl shadow-2xl flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-3 md:p-0">
+      <div className="w-[600px] max-w-full max-h-[90dvh] md:max-h-[80vh] bg-bg-card border border-border rounded-2xl shadow-2xl flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-border shrink-0">
+        <div className="flex items-center justify-between px-4 md:px-6 py-4 border-b border-border shrink-0">
           <div className="flex items-center gap-2">
             <ExternalLink className="w-5 h-5 text-violet-400" />
             <h2 className="text-lg font-semibold text-text-primary">
@@ -201,7 +201,7 @@ export function LinearModal({ onClose }: { onClose: () => void }) {
 
           {/* Team selection */}
           {!loading && step === 'teams' && !error && (
-            <div className="p-6">
+            <div className="p-4 md:p-6">
               <p className="text-sm text-text-secondary mb-3">
                 {zh ? '选择 Linear 团队：' : 'Select a Linear team:'}
               </p>
@@ -236,7 +236,7 @@ export function LinearModal({ onClose }: { onClose: () => void }) {
           {!loading && step === 'bugs' && bugs.length > 0 && (
             <div className="divide-y divide-border">
               {bugs.map(bug => (
-                <div key={bug.id} className="px-6 py-3 flex items-center gap-3 hover:bg-bg-hover transition-colors">
+                <div key={bug.id} className="px-4 md:px-6 py-3 flex items-center gap-3 hover:bg-bg-hover transition-colors">
                   <button
                     onClick={() => toggleSelect(bug.id)}
                     className={`shrink-0 ${imported.has(bug.id) ? 'text-text-muted/30 cursor-default' : 'text-text-muted hover:text-violet-400'}`}
@@ -282,7 +282,7 @@ export function LinearModal({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3 border-t border-border shrink-0 flex items-center justify-between">
+        <div className="px-4 md:px-6 py-3 border-t border-border shrink-0 flex items-center justify-between">
           <div className="flex items-center gap-3">
             {step === 'bugs' && bugs.length > 0 && (
               <button

@@ -75,34 +75,34 @@ export function Navbar() {
   }
 
   return (
-    <header className="h-12 bg-bg-primary border-b border-border flex items-center justify-between px-4 shrink-0">
+    <header className="h-12 bg-bg-primary border-b border-border flex items-center justify-between gap-2 px-3 md:px-4 shrink-0">
       {/* Left Logo */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 shrink-0">
         <img src="favicon.svg" alt="BugPack" className="w-7 h-7" />
-        <span className="text-base font-bold tracking-tight text-text-primary">{t.app.name}</span>
+        <span className="text-base font-bold tracking-tight text-text-primary hidden min-[400px]:inline">{t.app.name}</span>
       </div>
 
       {/* Right side */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 min-w-0">
         {/* Project switcher */}
-        <div className="relative" ref={projDropdownRef}>
+        <div className="relative min-w-0" ref={projDropdownRef}>
           <button
             onClick={() => setProjDropdown(!projDropdown)}
-            className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-border text-sm hover:bg-bg-hover transition-colors"
+            className="flex items-center gap-2 px-3 md:px-4 py-1.5 rounded-full border border-border text-sm hover:bg-bg-hover transition-colors max-w-full"
           >
-            <span className="text-text-muted">{t.nav.project}:</span>
-            <span className="text-text-primary font-medium">{currentProject}</span>
-            <ChevronDown className={`w-3 h-3 text-text-muted transition-transform ${projDropdown ? 'rotate-180' : ''}`} />
+            <span className="text-text-muted hidden md:inline">{t.nav.project}:</span>
+            <span className="text-text-primary font-medium truncate">{currentProject}</span>
+            <ChevronDown className={`w-3 h-3 shrink-0 text-text-muted transition-transform ${projDropdown ? 'rotate-180' : ''}`} />
           </button>
 
           {projDropdown && (
-            <div className="absolute top-full right-0 mt-1 w-64 bg-bg-card border border-border rounded-lg shadow-xl z-50 overflow-hidden">
+            <div className="absolute top-full right-0 mt-1 w-64 max-w-[calc(100vw-24px)] bg-bg-card border border-border rounded-lg shadow-xl z-50 overflow-hidden">
               {/* Project list */}
               <div className="max-h-48 overflow-y-auto">
                 {projects.map((p) => (
                   <div
                     key={p.id}
-                    className={`flex items-center justify-between px-3 py-2 text-sm cursor-pointer transition-colors group ${
+                    className={`flex items-center justify-between px-3 py-3 md:py-2 text-sm cursor-pointer transition-colors group ${
                       p.id === currentProjectId ? 'bg-accent/10 text-accent' : 'text-text-secondary hover:bg-bg-hover'
                     }`}
                     onClick={() => { switchProject(p.id); setProjDropdown(false) }}
@@ -110,7 +110,7 @@ export function Navbar() {
                     <span className="truncate">{p.name}</span>
                     <button
                       onClick={(e) => { e.stopPropagation(); setProjDeleteTarget({ id: p.id, name: p.name }) }}
-                      className="p-1 text-text-muted hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="p-1.5 md:p-1 text-text-muted hover:text-red-400 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
                     >
                       <Trash2 className="w-3 h-3" />
                     </button>
@@ -178,7 +178,7 @@ export function Navbar() {
         {/* Settings */}
         <button
           onClick={() => setSettingsOpen(true)}
-          className="p-2 rounded-lg text-text-muted hover:bg-bg-hover hover:text-text-secondary transition-colors"
+          className="p-2 shrink-0 rounded-lg text-text-muted hover:bg-bg-hover hover:text-text-secondary transition-colors"
           title={t.nav.settings}
         >
           <Settings className="w-4 h-4" />

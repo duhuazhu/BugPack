@@ -197,8 +197,8 @@ export function EditorArea({ bug }: { bug: Bug }) {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="h-12 bg-bg-input border-b border-border flex items-center px-4 shrink-0">
-        <div className="flex items-center gap-0.5 bg-bg-primary/60 rounded-lg p-1">
+      <div className="h-12 bg-bg-input border-b border-border flex items-center px-2 md:px-4 shrink-0 overflow-x-auto overflow-y-hidden no-scrollbar">
+        <div className="flex items-center gap-0.5 bg-bg-primary/60 rounded-lg p-1 shrink-0">
           {tools.map(({ key, icon: Icon, label }) => (
             <button
               key={key}
@@ -215,14 +215,14 @@ export function EditorArea({ bug }: { bug: Bug }) {
           ))}
         </div>
 
-        <div className="w-px h-6 bg-border mx-3" />
+        <div className="w-px h-6 bg-border mx-2 md:mx-3 shrink-0" />
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 shrink-0">
           {toolColors.map((color) => (
             <button
               key={color}
               onClick={() => setActiveColor(color)}
-              className={`w-5 h-5 rounded-full transition-all ${
+              className={`w-6 h-6 md:w-5 md:h-5 shrink-0 rounded-full transition-all ${
                 activeColor === color ? 'ring-2 ring-white/40 ring-offset-1 ring-offset-bg-input' : 'hover:ring-1 hover:ring-white/20'
               }`}
               style={{ backgroundColor: color }}
@@ -230,7 +230,7 @@ export function EditorArea({ bug }: { bug: Bug }) {
           ))}
           {/* Custom color picker */}
           <label
-            className={`w-5 h-5 rounded-full cursor-pointer transition-all overflow-hidden relative ${
+            className={`w-6 h-6 md:w-5 md:h-5 shrink-0 rounded-full cursor-pointer transition-all overflow-hidden relative ${
               !toolColors.includes(activeColor) ? 'ring-2 ring-white/40 ring-offset-1 ring-offset-bg-input' : 'hover:ring-1 hover:ring-white/20'
             }`}
             style={{ background: !toolColors.includes(activeColor) ? activeColor : `conic-gradient(red, yellow, lime, aqua, blue, magenta, red)` }}
@@ -244,9 +244,9 @@ export function EditorArea({ bug }: { bug: Bug }) {
           </label>
         </div>
 
-        <div className="w-px h-6 bg-border mx-3" />
+        <div className="w-px h-6 bg-border mx-2 md:mx-3 shrink-0" />
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 shrink-0 pr-2 md:pr-0">
           <button
             onClick={() => window.dispatchEvent(new Event('bugpack:undo'))}
             className="p-2 rounded-md text-text-muted hover:text-text-secondary hover:bg-bg-hover transition-colors"
@@ -328,8 +328,8 @@ export function EditorArea({ bug }: { bug: Bug }) {
 
         {hasScreenshots && currentSS && compareMode ? (
           /* Compare mode: two screenshots side by side */
-          <div className="absolute inset-0 flex">
-            <div className="flex-1 flex flex-col border-r border-border">
+          <div className="absolute inset-0 flex flex-col md:flex-row">
+            <div className="flex-1 min-h-0 flex flex-col border-b md:border-b-0 md:border-r border-border">
               <div className="text-center py-1.5 bg-bg-input border-b border-border">
                 <span className="text-xs text-text-muted">{t.editor.compareLeft}</span>
                 <select
@@ -350,7 +350,7 @@ export function EditorArea({ bug }: { bug: Bug }) {
                 )}
               </div>
             </div>
-            <div className="flex-1 flex flex-col">
+            <div className="flex-1 min-h-0 flex flex-col">
               <div className="text-center py-1.5 bg-bg-input border-b border-border">
                 <span className="text-xs text-text-muted">{t.editor.compareRight}</span>
                 <select
@@ -369,7 +369,7 @@ export function EditorArea({ bug }: { bug: Bug }) {
                 ) : (
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="flex flex-col items-center justify-center gap-2 text-text-muted hover:text-accent transition-colors border-2 border-dashed border-border hover:border-accent/50 rounded-xl px-12 py-8"
+                    className="flex flex-col items-center justify-center gap-2 text-text-muted hover:text-accent transition-colors border-2 border-dashed border-border hover:border-accent/50 rounded-xl px-6 py-4 md:px-12 md:py-8"
                   >
                     <PlusIcon className="w-8 h-8" />
                     <span className="text-sm">{zh ? '上传期望效果图' : 'Upload expected image'}</span>
@@ -397,26 +397,31 @@ export function EditorArea({ bug }: { bug: Bug }) {
               }}
             />
 
-            <div className="absolute bottom-4 right-4 flex items-center gap-1 bg-bg-card/90 backdrop-blur-sm rounded-lg px-2 py-1 border border-border z-10">
-              <button onClick={() => setZoom(Math.max(25, zoom - 25))} className="p-1 text-text-muted hover:text-text-secondary">
+            <div className="absolute bottom-2 right-2 md:bottom-4 md:right-4 flex items-center gap-1 bg-bg-card/90 backdrop-blur-sm rounded-lg px-2 py-1 border border-border z-10">
+              <button onClick={() => setZoom(Math.max(25, zoom - 25))} className="p-2 md:p-1 text-text-muted hover:text-text-secondary">
                 <Minus className="w-3.5 h-3.5" />
               </button>
               <span className="text-xs text-text-secondary w-10 text-center">{zoom}%</span>
-              <button onClick={() => setZoom(Math.min(200, zoom + 25))} className="p-1 text-text-muted hover:text-text-secondary">
+              <button onClick={() => setZoom(Math.min(200, zoom + 25))} className="p-2 md:p-1 text-text-muted hover:text-text-secondary">
                 <Plus className="w-3.5 h-3.5" />
               </button>
               <div className="w-px h-4 bg-border mx-1" />
-              <button onClick={() => { window.dispatchEvent(new Event('bugpack:fitWindow')) }} className="p-1 text-text-muted hover:text-text-secondary" title={t.editor.fitWindow}>
+              <button onClick={() => { window.dispatchEvent(new Event('bugpack:fitWindow')) }} className="p-2 md:p-1 text-text-muted hover:text-text-secondary" title={t.editor.fitWindow}>
                 <Maximize2 className="w-3.5 h-3.5" />
               </button>
             </div>
           </>
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center border-2 border-dashed border-border rounded-2xl px-16 py-12">
+          <div className="absolute inset-0 flex items-center justify-center p-4">
+            <div
+              onClick={() => fileInputRef.current?.click()}
+              className="text-center border-2 border-dashed border-border rounded-2xl px-6 py-8 md:px-16 md:py-12 cursor-pointer md:cursor-default"
+            >
               <Clipboard className="w-12 h-12 text-text-muted mx-auto mb-4" />
-              <p className="text-lg text-text-secondary mb-1">{t.editor.emptyTitle}</p>
-              <p className="text-sm text-text-muted mb-3">{t.editor.emptySubtitle}</p>
+              <p className="text-lg text-text-secondary mb-1 hidden md:block">{t.editor.emptyTitle}</p>
+              <p className="text-sm text-text-muted mb-3 hidden md:block">{t.editor.emptySubtitle}</p>
+              {/* 手机没有粘贴和拖拽，提示点击选图 */}
+              <p className="text-base text-text-secondary mb-3 md:hidden">{zh ? '点击选择截图或拍照' : 'Tap to choose a screenshot or take a photo'}</p>
               <p className="text-xs text-text-muted">{t.editor.emptyFormat}</p>
             </div>
           </div>
@@ -432,20 +437,20 @@ export function EditorArea({ bug }: { bug: Bug }) {
         onChange={handleFileSelect}
       />
 
-      <div className="h-[180px] border-t border-border bg-bg-sidebar shrink-0">
-        <div className="flex items-center justify-between px-4 py-2">
+      <div className="h-[136px] md:h-[180px] border-t border-border bg-bg-sidebar shrink-0">
+        <div className="flex items-center justify-between px-3 md:px-4 py-1.5 md:py-2">
           <span className="text-sm text-text-secondary">
             {t.evidence.title} ({bug.screenshots.length})
           </span>
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="flex items-center gap-1 text-xs text-accent hover:text-accent-hover transition-colors"
+            className="flex items-center gap-1 text-xs text-accent hover:text-accent-hover transition-colors py-1"
           >
             <PlusIcon className="w-3 h-3" />
             {t.evidence.addFile}
           </button>
         </div>
-        <div className="flex gap-3 px-4 pb-3 overflow-x-auto">
+        <div className="flex gap-2 md:gap-3 px-3 md:px-4 pb-3 overflow-x-auto">
           {bug.screenshots.map((ss, i) => (
             <button
               key={ss.id}
@@ -470,7 +475,7 @@ export function EditorArea({ bug }: { bug: Bug }) {
               className={`shrink-0 group relative transition-transform ${dragOverIndex === i ? 'scale-105 ring-2 ring-accent' : ''}`}
             >
               <div
-                className={`w-[120px] h-[90px] rounded-lg overflow-hidden border-2 transition-colors ${
+                className={`w-[88px] h-[66px] md:w-[120px] md:h-[90px] rounded-lg overflow-hidden border-2 transition-colors ${
                   selectedScreenshot === i ? 'border-accent' : 'border-border hover:border-border'
                 }`}
               >
@@ -489,7 +494,7 @@ export function EditorArea({ bug }: { bug: Bug }) {
               </div>
               <button
                 onClick={(e) => { e.stopPropagation(); deleteScreenshot(bug.id, ss.id) }}
-                className="absolute top-1 right-1 w-5 h-5 bg-red-500 rounded-full items-center justify-center text-white hidden group-hover:flex z-10"
+                className="absolute top-1 right-1 w-5 h-5 bg-red-500 rounded-full items-center justify-center text-white flex md:hidden md:group-hover:flex z-10"
               >
                 <X className="w-3 h-3" />
               </button>
@@ -497,7 +502,7 @@ export function EditorArea({ bug }: { bug: Bug }) {
                 <input
                   autoFocus
                   defaultValue={ss.name}
-                  className="text-[11px] text-text-primary mt-1.5 text-center w-[120px] bg-bg-input border border-accent rounded px-1 py-0.5 outline-none"
+                  className="text-[11px] text-text-primary mt-1.5 text-center w-[88px] md:w-[120px] bg-bg-input border border-accent rounded px-1 py-0.5 outline-none"
                   onBlur={(e) => {
                     const val = e.target.value.trim()
                     if (val && val !== ss.name) renameScreenshot(bug.id, ss.id, val)
@@ -511,7 +516,7 @@ export function EditorArea({ bug }: { bug: Bug }) {
                 />
               ) : (
                 <p
-                  className="text-[11px] text-text-secondary mt-1.5 text-center truncate w-[120px] cursor-text"
+                  className="text-[11px] text-text-secondary mt-1.5 text-center truncate w-[88px] md:w-[120px] cursor-text"
                   onDoubleClick={(e) => { e.stopPropagation(); setEditingNameId(ss.id) }}
                 >
                   {displayName(ss.name)}
@@ -522,7 +527,7 @@ export function EditorArea({ bug }: { bug: Bug }) {
 
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="shrink-0 w-[120px] h-[90px] rounded-lg border-2 border-dashed border-border hover:border-accent/50 flex flex-col items-center justify-center text-text-muted hover:text-accent transition-colors"
+            className="shrink-0 w-[88px] h-[66px] md:w-[120px] md:h-[90px] rounded-lg border-2 border-dashed border-border hover:border-accent/50 flex flex-col items-center justify-center text-text-muted hover:text-accent transition-colors"
           >
             <PlusIcon className="w-6 h-6 mb-1" />
             <span className="text-[11px]">{t.evidence.addFile}</span>

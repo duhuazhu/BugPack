@@ -28,8 +28,8 @@ export function ShortcutsModal() {
   ]
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={() => setShortcutsOpen(false)}>
-      <div className="w-[400px] bg-bg-card border border-border rounded-2xl shadow-2xl" onClick={(e) => e.stopPropagation()}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" onClick={() => setShortcutsOpen(false)}>
+      <div className="w-[400px] max-w-full bg-bg-card border border-border rounded-2xl shadow-2xl" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-border">
           <div className="flex items-center gap-2">

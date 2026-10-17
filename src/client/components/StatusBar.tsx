@@ -9,10 +9,10 @@ export function StatusBar() {
   const pending = bugs.filter((b) => b.status === 'pending' || b.status === 'annotating').length
 
   return (
-    <footer className="h-8 bg-bg-primary border-t border-border flex items-center justify-between px-4 text-xs text-text-muted shrink-0">
+    <footer className="min-h-8 bg-bg-primary border-t border-border flex items-center justify-between px-4 pb-[env(safe-area-inset-bottom)] text-xs text-text-muted shrink-0">
       {/* Left: workspace status + stats */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-1.5">
+        <div className="hidden md:flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
           <span>{zh ? '工作空间活跃' : 'Workspace Active'}</span>
         </div>
@@ -20,7 +20,7 @@ export function StatusBar() {
       </div>
 
       {/* Right: storage path */}
-      <div className="flex items-center gap-1.5">
+      <div className="hidden md:flex items-center gap-1.5">
         <Folder className="w-3 h-3" />
         <span>{settings.dataDir || settings._dataDir || '~/.bugpack/data/'}</span>
       </div>

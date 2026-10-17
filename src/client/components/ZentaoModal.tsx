@@ -159,10 +159,10 @@ export function ZentaoModal({ onClose }: { onClose: () => void }) {
   const curProduct = products.find(p => String(p.id) === selectedProductId)
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="w-[600px] max-h-[80vh] bg-bg-card border border-border rounded-2xl shadow-2xl flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-3 md:p-0">
+      <div className="w-[600px] max-w-full max-h-[90dvh] md:max-h-[80vh] bg-bg-card border border-border rounded-2xl shadow-2xl flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-border shrink-0">
+        <div className="flex items-center justify-between px-4 md:px-6 py-4 border-b border-border shrink-0">
           <div className="flex items-center gap-2">
             <ExternalLink className="w-5 h-5 text-accent" />
             <h2 className="text-lg font-semibold text-text-primary">
@@ -215,7 +215,7 @@ export function ZentaoModal({ onClose }: { onClose: () => void }) {
 
           {/* Product selection */}
           {!loading && step === 'products' && !error && (
-            <div className="p-6">
+            <div className="p-4 md:p-6">
               <p className="text-sm text-text-secondary mb-3">
                 {zh ? '选择禅道项目：' : 'Select a Zentao project:'}
               </p>
@@ -250,7 +250,7 @@ export function ZentaoModal({ onClose }: { onClose: () => void }) {
           {!loading && step === 'bugs' && bugs.length > 0 && (
             <div className="divide-y divide-border">
               {bugs.map(bug => (
-                <div key={bug.id} className="px-6 py-3 flex items-center gap-3 hover:bg-bg-hover transition-colors">
+                <div key={bug.id} className="px-4 md:px-6 py-3 flex items-center gap-3 hover:bg-bg-hover transition-colors">
                   {/* Checkbox */}
                   <button
                     onClick={() => toggleSelect(bug.id)}
@@ -297,7 +297,7 @@ export function ZentaoModal({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3 border-t border-border shrink-0 flex items-center justify-between">
+        <div className="px-4 md:px-6 py-3 border-t border-border shrink-0 flex items-center justify-between">
           <div className="flex items-center gap-3">
             {step === 'bugs' && bugs.length > 0 && (
               <button

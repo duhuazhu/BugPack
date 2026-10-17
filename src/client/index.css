@@ -65,3 +65,44 @@
   overflow: hidden;
   transition: max-height 0.2s ease-out;
 }
+
+/* 预览 Markdown 基础排版（未装 typography 插件） */
+.prose { line-height: 1.7; word-break: break-word; }
+.prose h1 { font-size: 1.375rem; font-weight: 700; margin: 0 0 1rem; color: var(--text-primary); }
+.prose h2 { font-size: 1.0625rem; font-weight: 600; margin: 1.75rem 0 0.75rem; color: var(--accent); }
+.prose h3 { font-size: 0.9375rem; font-weight: 600; margin: 1rem 0 0.5rem; color: var(--text-primary); }
+.prose p { margin: 0.5rem 0; color: var(--text-secondary); }
+.prose ul, .prose ol { margin: 0.5rem 0; padding-left: 1.25rem; color: var(--text-secondary); }
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+.prose strong { color: var(--text-primary); }
+.prose code { color: var(--accent); font-size: 0.85em; }
+.prose pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem; overflow-x: auto; }
+.prose img { border-radius: 8px; border: 1px solid var(--border); margin: 0.5rem 0; }
+
+/* 预览里的图片、表格不超出容器 */
+.prose img {
+  max-width: 100%;
+  height: auto;
+}
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* 手机端 */
+@media (max-width: 767px) {
+  /* 输入框字号不小于 16px，避免 iOS 聚焦时自动放大页面 */
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+
+  /* 横向滑动的工具栏不显示滚动条 */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}

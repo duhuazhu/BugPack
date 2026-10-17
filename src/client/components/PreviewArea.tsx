@@ -70,7 +70,7 @@ export function PreviewArea({ bug }: { bug: Bug }) {
   return (
     <div className="flex h-full">
       {/* Left sidebar table of contents */}
-      <div className="w-48 bg-bg-sidebar border-r border-border p-4 shrink-0">
+      <div className="hidden md:block w-48 bg-bg-sidebar border-r border-border p-4 shrink-0">
         <button
           onClick={() => setViewMode('edit')}
           className="flex items-center gap-1.5 text-sm text-accent hover:text-accent-hover mb-6 transition-colors"
@@ -106,33 +106,43 @@ export function PreviewArea({ bug }: { bug: Bug }) {
       {/* Center Markdown preview */}
       <div className="flex-1 overflow-y-auto">
         {/* Action bar */}
-        <div className="sticky top-0 bg-bg-primary/90 backdrop-blur-sm border-b border-border px-6 py-3 flex items-center justify-between z-10">
-          <h2 className="text-sm text-text-secondary">
+        <div className="sticky top-0 bg-bg-primary/90 backdrop-blur-sm border-b border-border px-2 md:px-6 py-2 md:py-3 flex items-center justify-between gap-2 z-10">
+          {/* 手机端没有左侧目录，返回按钮放这里 */}
+          <button
+            onClick={() => setViewMode('edit')}
+            className="md:hidden p-2 rounded-lg text-accent active:bg-bg-hover"
+            aria-label={t.preview.backToEdit}
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+          <h2 className="text-sm text-text-secondary flex-1 min-w-0 truncate">
             Bug #{String(bug.number).padStart(3, '0')}
             {bug.externalId && (
               <span className="ml-2 text-xs text-accent">[{bug.externalId}]</span>
             )}
           </h2>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={handleCopy}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-text-secondary bg-bg-input border border-border rounded-lg hover:bg-bg-hover transition-colors"
+              title={t.preview.copy}
+              className="flex items-center gap-1.5 p-2.5 md:px-3 md:py-1.5 text-sm text-text-secondary bg-bg-input border border-border rounded-lg hover:bg-bg-hover transition-colors"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
-              {copied ? (locale === 'zh' ? '已复制' : 'Copied') : t.preview.copy}
+              {copied ? <Check className="w-4 h-4 md:w-3.5 md:h-3.5 text-green-400" /> : <Copy className="w-4 h-4 md:w-3.5 md:h-3.5" />}
+              <span className="hidden md:inline">{copied ? (locale === 'zh' ? '已复制' : 'Copied') : t.preview.copy}</span>
             </button>
             <button
               onClick={handleExport}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-text-secondary bg-bg-input border border-border rounded-lg hover:bg-bg-hover transition-colors"
+              title={t.preview.export}
+              className="flex items-center gap-1.5 p-2.5 md:px-3 md:py-1.5 text-sm text-text-secondary bg-bg-input border border-border rounded-lg hover:bg-bg-hover transition-colors"
             >
-              <Download className="w-3.5 h-3.5" />
-              {t.preview.export}
+              <Download className="w-4 h-4 md:w-3.5 md:h-3.5" />
+              <span className="hidden md:inline">{t.preview.export}</span>
             </button>
           </div>
         </div>
 
         {/* Markdown render */}
-        <div className="max-w-5xl mx-auto p-8 prose prose-invert prose-sm max-w-none
+        <div className="max-w-5xl mx-auto p-4 md:p-8 prose prose-invert prose-sm max-w-none
           prose-headings:text-text-primary prose-p:text-text-secondary prose-li:text-text-secondary
           prose-a:text-accent prose-strong:text-text-primary prose-code:text-accent
           prose-img:rounded-lg prose-img:border prose-img:border-border
@@ -145,7 +155,7 @@ export function PreviewArea({ bug }: { bug: Bug }) {
         </div>
 
         {/* Raw Markdown source */}
-        <div className="max-w-5xl mx-auto px-8 pb-4">
+        <div className="max-w-5xl mx-auto px-4 md:px-8 pb-4">
           <details className="group">
             <summary className="text-xs text-text-muted cursor-pointer hover:text-text-secondary mb-2">
               {locale === 'zh' ? '查看原始 Markdown' : 'View Raw Markdown'}
